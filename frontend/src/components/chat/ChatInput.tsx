@@ -1,4 +1,24 @@
+import { useState } from "react";
+import { sendMessage } from "../../services/chatService";
+
 const ChatInput = () => {
+  const [message, setMessage] = useState("");
+
+ const handleSend = async () => {
+  if (!message.trim()) return;
+
+  try {
+    const response = await sendMessage(message);
+
+    alert(response.reply);
+
+    setMessage("");
+  } catch (error) {
+    console.error(error);
+    alert("Unable to contact SHAAN.");
+  }
+};
+
   return (
     <div
       style={{
@@ -11,6 +31,8 @@ const ChatInput = () => {
       <input
         type="text"
         placeholder="Ask SHAAN anything..."
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
         style={{
           flex: 1,
           padding: "14px",
@@ -22,6 +44,7 @@ const ChatInput = () => {
       />
 
       <button
+        onClick={handleSend}
         style={{
           marginLeft: "10px",
           padding: "14px 22px",
