@@ -1,5 +1,7 @@
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+import ChatWindow from "../chat/ChatWindow";
+import ChatInput from "../chat/ChatInput";
 
 const MainLayout = () => {
   return (
@@ -15,11 +17,17 @@ const MainLayout = () => {
         <Sidebar />
 
         <main
-          style={{
-            flex: 1,
-            background: "#0f172a",
-          }}
-        ></main>
+  style={{
+    flex: 1,
+    background: "#0F172A",
+    display: "flex",
+    flexDirection: "column",
+  }}
+>
+  <ChatWindow />
+
+  <ChatInput />
+</main>
       </div>
     </>
   );
