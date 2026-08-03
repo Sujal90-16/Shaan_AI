@@ -9,13 +9,7 @@ import ChatInput from "../chat/ChatInput";
 import type { ChatMessage } from "../../types/chat";
 
 const MainLayout = () => {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: 1,
-      sender: "assistant",
-      text: "Hello Sujal 👋\n\nI'm SHAAN.\nHow can I help you today?",
-    },
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
 
   const [loading, setLoading] = useState(false);
 
