@@ -1,16 +1,12 @@
-import { useState } from "react";
 import MessageBubble from "./MessageBubble";
 import type { ChatMessage } from "../../types/chat";
 
-const ChatWindow = () => {
-  const [messages] = useState<ChatMessage[]>([
-    {
-      id: 1,
-      sender: "assistant",
-      text: "Hello Sujal 👋\n\nI'm SHAAN.\nHow can I help you today?",
-    },
-  ]);
+interface ChatWindowProps {
+  messages: ChatMessage[];
+  loading: boolean;
+}
 
+const ChatWindow = ({ messages, loading }: ChatWindowProps) => {
   return (
     <div
       style={{
@@ -27,6 +23,13 @@ const ChatWindow = () => {
           text={message.text}
         />
       ))}
+
+      {loading && (
+        <MessageBubble
+          sender="assistant"
+          text="Thinking..."
+        />
+      )}
     </div>
   );
 };

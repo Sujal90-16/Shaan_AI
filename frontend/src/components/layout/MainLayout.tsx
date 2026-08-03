@@ -1,9 +1,24 @@
+import { useState } from "react";
+
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+
 import ChatWindow from "../chat/ChatWindow";
 import ChatInput from "../chat/ChatInput";
 
+import type { ChatMessage } from "../../types/chat";
+
 const MainLayout = () => {
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    {
+      id: 1,
+      sender: "assistant",
+      text: "Hello Sujal 👋\n\nI'm SHAAN.\nHow can I help you today?",
+    },
+  ]);
+
+  const [loading, setLoading] = useState(false);
+
   return (
     <>
       <Header />
@@ -17,17 +32,25 @@ const MainLayout = () => {
         <Sidebar />
 
         <main
-  style={{
-    flex: 1,
-    background: "#0F172A",
-    display: "flex",
-    flexDirection: "column",
-  }}
->
-  <ChatWindow />
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            background: "#0F172A",
+          }}
+        >
+          <ChatWindow
+            messages={messages}
+            loading={loading}
+          />
 
-  <ChatInput />
-</main>
+          <ChatInput
+            messages={messages}
+            setMessages={setMessages}
+            loading={loading}
+            setLoading={setLoading}
+          />
+        </main>
       </div>
     </>
   );
