@@ -1,25 +1,48 @@
 const Sidebar = () => {
   return (
-    <aside
-      style={{
-        width: "260px",
-        background: "#111827",
-        color: "white",
-        borderRight: "1px solid #2b2b2b",
-        padding: "20px",
-      }}
-    >
-      <h2>SHAAN</h2>
+    <aside className="w-72 bg-slate-900 border-r border-slate-700 flex flex-col p-5">
+      {/* Logo */}
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-white">SHAAN</h2>
+        <p className="text-sm text-slate-400">
+          Your Personal AI Assistant
+        </p>
+      </div>
 
-      <hr />
+      {/* New Chat */}
+      <button className="mb-6 w-full rounded-xl bg-blue-600 py-3 font-medium text-white transition hover:bg-blue-700">
+        + New Chat
+      </button>
 
-      <p>+ New Chat</p>
+      {/* Navigation */}
+      <nav className="flex flex-col gap-2">
+        <button className="rounded-lg px-4 py-3 text-left text-slate-300 transition hover:bg-slate-800 hover:text-white">
+          💬 Recent Chats
+        </button>
 
-      <p>History</p>
+        <button className="rounded-lg px-4 py-3 text-left text-slate-300 transition hover:bg-slate-800 hover:text-white">
+          🧠 Memory
+        </button>
 
-      <p>Memory</p>
+        <button className="rounded-lg px-4 py-3 text-left text-slate-300 transition hover:bg-slate-800 hover:text-white">
+          ⚡ Automations
+        </button>
 
-      <p>Settings</p>
+        <button className="rounded-lg px-4 py-3 text-left text-slate-300 transition hover:bg-slate-800 hover:text-white">
+          📁 Files
+        </button>
+
+        <button className="rounded-lg px-4 py-3 text-left text-slate-300 transition hover:bg-slate-800 hover:text-white">
+          ⚙️ Settings
+        </button>
+      </nav>
+
+      {/* Footer */}
+      <div className="mt-auto border-t border-slate-700 pt-5">
+        <p className="text-sm text-slate-500">
+          SHAAN AI v0.1.0
+        </p>
+      </div>
     </aside>
   );
 };

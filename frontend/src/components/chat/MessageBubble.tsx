@@ -8,31 +8,44 @@ const MessageBubble = ({ sender, text }: MessageBubbleProps) => {
 
   return (
     <div
-      style={{
-        display: "flex",
-        justifyContent: isUser ? "flex-end" : "flex-start",
-        marginBottom: "20px",
-      }}
+      className={`mb-6 flex ${
+        isUser ? "justify-end" : "justify-start"
+      }`}
     >
       <div
-        style={{
-          backgroundColor: isUser ? "#2563EB" : "#1E293B",
-          color: "#FFFFFF",
-          padding: "16px",
-          borderRadius: "12px",
-          maxWidth: "70%",
-          whiteSpace: "pre-wrap",
-        }}
+        className={`flex max-w-3xl items-start gap-3 ${
+          isUser ? "flex-row-reverse" : ""
+        }`}
       >
-        <strong>{isUser ? "You" : "SHAAN"}</strong>
-
-        <p
-          style={{
-            marginTop: "10px",
-          }}
+        {/* Avatar */}
+        <div
+          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-bold text-white ${
+            isUser ? "bg-blue-600" : "bg-slate-700"
+          }`}
         >
-          {text}
-        </p>
+          {isUser ? "Y" : "S"}
+        </div>
+
+        {/* Bubble */}
+        <div
+          className={`rounded-2xl px-5 py-4 shadow-md ${
+            isUser
+              ? "bg-blue-600 text-white"
+              : "bg-slate-800 text-slate-100"
+          }`}
+        >
+          <p
+            className={`mb-2 text-sm font-semibold ${
+              isUser ? "text-blue-100" : "text-slate-400"
+            }`}
+          >
+            {isUser ? "You" : "SHAAN"}
+          </p>
+
+          <p className="whitespace-pre-wrap leading-7">
+            {text}
+          </p>
+        </div>
       </div>
     </div>
   );

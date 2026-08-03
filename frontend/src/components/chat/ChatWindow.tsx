@@ -1,3 +1,4 @@
+import TypingIndicator from "./TypingIndicator";
 import MessageBubble from "./MessageBubble";
 import type { ChatMessage } from "../../types/chat";
 
@@ -24,12 +25,7 @@ const ChatWindow = ({ messages, loading }: ChatWindowProps) => {
         />
       ))}
 
-      {loading && (
-        <MessageBubble
-          sender="assistant"
-          text="Thinking..."
-        />
-      )}
+      {loading && <TypingIndicator />}
     </div>
   );
 };

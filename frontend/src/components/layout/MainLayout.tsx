@@ -20,25 +20,13 @@ const MainLayout = () => {
   const [loading, setLoading] = useState(false);
 
   return (
-    <>
+    <div className="h-screen flex flex-col bg-slate-950">
       <Header />
 
-      <div
-        style={{
-          display: "flex",
-          height: "calc(100vh - 70px)",
-        }}
-      >
+      <div className="flex flex-1 overflow-hidden">
         <Sidebar />
 
-        <main
-          style={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            background: "#0F172A",
-          }}
-        >
+        <main className="flex flex-1 flex-col bg-slate-950">
           <ChatWindow
             messages={messages}
             loading={loading}
@@ -52,7 +40,7 @@ const MainLayout = () => {
           />
         </main>
       </div>
-    </>
+    </div>
   );
 };
 

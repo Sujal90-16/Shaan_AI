@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Send, Mic } from "lucide-react";
 
 import { sendMessage } from "../../services/chatService";
 import type { ChatMessage } from "../../types/chat";
@@ -23,7 +24,6 @@ const ChatInput = ({
 
     const currentMessage = message;
 
-    // Show user message immediately
     const userMessage: ChatMessage = {
       id: Date.now(),
       sender: "user",
@@ -33,8 +33,6 @@ const ChatInput = ({
     setMessages((prev) => [...prev, userMessage]);
 
     setMessage("");
-
-    // Show typing indicator
     setLoading(true);
 
     try {
@@ -50,66 +48,50 @@ const ChatInput = ({
     } catch (error) {
       console.error(error);
 
-      const errorMessage: ChatMessage = {
-        id: Date.now() + 2,
-        sender: "assistant",
-        text: "Sorry, I couldn't reach SHAAN.",
-      };
-
-      setMessages((prev) => [...prev, errorMessage]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now() + 2,
+          sender: "assistant",
+          text: "Sorry, I couldn't reach SHAAN.",
+        },
+      ]);
     } finally {
-      // Hide typing indicator
       setLoading(false);
     }
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        padding: "20px",
-        borderTop: "1px solid #2B2B2B",
-        background: "#111827",
-      }}
-    >
-      <input
-        type="text"
-        placeholder="Ask SHAAN anything..."
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleSend();
-          }
-        }}
-        disabled={loading}
-        style={{
-          flex: 1,
-          padding: "14px",
-          borderRadius: "10px",
-          border: "none",
-          outline: "none",
-          fontSize: "16px",
-        }}
-      />
+    <div className="border-t border-slate-700 bg-slate-950 p-5">
+      <div className="mx-auto flex max-w-5xl items-center gap-3 rounded-2xl border border-slate-700 bg-slate-900 p-3 shadow-lg">
+        <input
+          type="text"
+          placeholder="Ask SHAAN anything..."
+          value={message}
+          disabled={loading}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSend();
+            }
+          }}
+          className="flex-1 bg-transparent px-2 text-white placeholder:text-slate-500 focus:outline-none"
+        />
 
-      <button
-        onClick={handleSend}
-        disabled={loading}
-        style={{
-          marginLeft: "10px",
-          padding: "14px 22px",
-          borderRadius: "10px",
-          border: "none",
-          cursor: loading ? "not-allowed" : "pointer",
-          background: "#2563EB",
-          color: "white",
-          fontWeight: "bold",
-          opacity: loading ? 0.7 : 1,
-        }}
-      >
-        {loading ? "Sending..." : "Send"}
-      </button>
+        <button
+          className="rounded-xl p-2 text-slate-400 transition hover:bg-slate-800 hover:text-white"
+        >
+          <Mic size={20} />
+        </button>
+
+        <button
+          onClick={handleSend}
+          disabled={loading}
+          className="rounded-xl bg-blue-600 p-3 text-white transition hover:bg-blue-700 disabled:opacity-50"
+        >
+          <Send size={18} />
+        </button>
+      </div>
     </div>
   );
 };
