@@ -1,23 +1,47 @@
+import {
+  Cpu,
+  Circle,
+  Settings,
+} from "lucide-react";
+
+import Logo from "../common/Logo";
+import Button from "../ui/Button";
+
 const Header = () => {
   return (
-    <header className="h-16 border-b border-slate-700 bg-slate-900 px-8 flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-xl font-bold">
-          S
-        </div>
-
-        <div>
-          <h1 className="text-xl font-bold text-white">SHAAN AI</h1>
-          <p className="text-xs text-slate-400">
-            Smart Hybrid AI Assistant Network
-          </p>
-        </div>
-      </div>
+    <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-slate-800 bg-slate-900/95 px-6 backdrop-blur">
+      <Logo />
 
       <div className="flex items-center gap-3">
-        <button className="rounded-lg bg-slate-800 px-4 py-2 text-sm text-slate-300 transition hover:bg-slate-700">
-          Settings
-        </button>
+        <div className="hidden items-center gap-2 rounded-full bg-slate-800 px-3 py-2 lg:flex">
+          <Cpu
+            size={16}
+            className="text-blue-400"
+          />
+
+          <span className="text-sm text-slate-300">
+            Gemini 2.5 Flash
+          </span>
+        </div>
+
+        <div className="hidden items-center gap-2 rounded-full bg-slate-800 px-3 py-2 md:flex">
+          <Circle
+            size={10}
+            fill="#22C55E"
+            className="text-green-500"
+          />
+
+          <span className="text-sm text-slate-300">
+            Connected
+          </span>
+        </div>
+
+        <Button
+          variant="ghost"
+          size="sm"
+        >
+          <Settings size={18} />
+        </Button>
       </div>
     </header>
   );
