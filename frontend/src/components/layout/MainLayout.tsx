@@ -6,29 +6,41 @@ import Sidebar from "./Sidebar";
 import ChatWindow from "../chat/ChatWindow";
 import ChatInput from "../chat/ChatInput";
 
-import type { ChatMessage } from "../../types/chat";
+import { useConversations } from "../../hooks/useConversations";
 
 const MainLayout = () => {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const {
+    conversations,
+    activeConversation,
+    activeConversationId,
+    createConversation,
+    setActiveConversationId,
+    updateMessages,
+  } = useConversations();
 
   const [loading, setLoading] = useState(false);
 
   return (
-    <div className="h-screen flex flex-col bg-slate-950">
+    <div className="flex h-screen flex-col bg-slate-950">
       <Header />
 
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar />
+        <Sidebar
+          conversations={conversations}
+          activeConversationId={activeConversationId}
+          onNewChat={createConversation}
+          onSelectConversation={setActiveConversationId}
+        />
 
-        <main className="flex flex-1 flex-col bg-slate-950">
+        <main className="flex min-w-0 flex-1 flex-col bg-slate-950">
           <ChatWindow
-            messages={messages}
+            messages={activeConversation.messages}
             loading={loading}
           />
 
           <ChatInput
-            messages={messages}
-            setMessages={setMessages}
+            messages={activeConversation.messages}
+            setMessages={updateMessages}
             loading={loading}
             setLoading={setLoading}
           />

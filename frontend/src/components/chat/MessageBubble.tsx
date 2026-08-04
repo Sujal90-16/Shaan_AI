@@ -13,7 +13,7 @@ const MessageBubble = ({ sender, text }: MessageBubbleProps) => {
       }`}
     >
       <div
-        className={`flex max-w-3xl items-start gap-3 ${
+        className={`flex w-full max-w-3xl items-start gap-3 ${
           isUser ? "flex-row-reverse" : ""
         }`}
       >
@@ -28,7 +28,7 @@ const MessageBubble = ({ sender, text }: MessageBubbleProps) => {
 
         {/* Bubble */}
         <div
-          className={`rounded-2xl px-5 py-4 shadow-md ${
+          className={`max-w-[75%] break-words rounded-2xl px-5 py-4 shadow-md ${
             isUser
               ? "bg-blue-600 text-white"
               : "bg-slate-800 text-slate-100"
@@ -42,7 +42,7 @@ const MessageBubble = ({ sender, text }: MessageBubbleProps) => {
             {isUser ? "You" : "SHAAN"}
           </p>
 
-          <p className="whitespace-pre-wrap leading-7">
+          <p className="break-words whitespace-pre-wrap leading-7">
             {text}
           </p>
         </div>
