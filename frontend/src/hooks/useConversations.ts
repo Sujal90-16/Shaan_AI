@@ -7,37 +7,37 @@ import type { ChatMessage } from "@/types/chat";
 
 export const useConversations = () => {
   const createDefaultConversation = (): Conversation => ({
-  id: "chat_1",
-  title: "New Chat",
-  messages: [],
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  pinned: false,
-});
+    id: "chat_1",
+    title: "New Chat",
+    messages: [],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    pinned: false,
+  });
 
-const [conversations, setConversations] = useState<Conversation[]>(() => {
-  const stored = conversationService.load();
+  const [conversations, setConversations] = useState<Conversation[]>(() => {
+    const stored = conversationService.load();
 
-  return stored.length > 0
-    ? stored
-    : [createDefaultConversation()];
-});
+    return stored.length > 0
+      ? stored
+      : [createDefaultConversation()];
+  });
 
   const [activeConversationId, setActiveConversationId] = useState(
-  () =>
-    conversationService.loadActiveConversation() ??
-    "chat_1"
-);
-
-  useEffect(() => {
-  conversationService.saveActiveConversation(
-    activeConversationId
+    () =>
+      conversationService.loadActiveConversation() ??
+      "chat_1"
   );
-}, [activeConversationId]);
 
   useEffect(() => {
-  conversationService.save(conversations);
-}, [conversations]);
+    conversationService.saveActiveConversation(
+      activeConversationId
+    );
+  }, [activeConversationId]);
+
+  useEffect(() => {
+    conversationService.save(conversations);
+  }, [conversations]);
 
   const activeConversation =
     conversations.find(
@@ -77,15 +77,48 @@ const [conversations, setConversations] = useState<Conversation[]>(() => {
           return chat;
         }
 
+        const newMessages =
+          typeof updater === "function"
+            ? updater(chat.messages)
+            : updater;
+
+        let title = chat.title;
+
+        if (
+          title === "New Chat" &&
+          newMessages.length > 0 &&
+          newMessages[0].sender === "user"
+        ) {
+          title =
+            newMessages[0].text.length > 40
+              ? newMessages[0].text.slice(0, 40) + "..."
+              : newMessages[0].text;
+        }
+
         return {
           ...chat,
-          messages:
-            typeof updater === "function"
-              ? updater(chat.messages)
-              : updater,
+          title,
+          messages: newMessages,
           updatedAt: new Date(),
         };
       })
+    );
+  };
+
+  const renameConversation = (
+    id: string,
+    title: string
+  ) => {
+    setConversations((prev) =>
+      prev.map((conversation) =>
+        conversation.id === id
+          ? {
+              ...conversation,
+              title,
+              updatedAt: new Date(),
+            }
+          : conversation
+      )
     );
   };
 
@@ -94,6 +127,7 @@ const [conversations, setConversations] = useState<Conversation[]>(() => {
     activeConversation:
       activeConversation ??
       conversations[0],
+
     activeConversationId,
 
     setActiveConversationId,
@@ -101,5 +135,7 @@ const [conversations, setConversations] = useState<Conversation[]>(() => {
     createConversation,
 
     updateMessages,
+
+    renameConversation,
   };
 };

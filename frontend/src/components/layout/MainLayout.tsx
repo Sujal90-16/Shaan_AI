@@ -19,6 +19,11 @@ const MainLayout = () => {
   } = useConversations();
 
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+
+const filteredConversations = conversations.filter((conversation) =>
+  conversation.title.toLowerCase().includes(search.toLowerCase())
+);
 
   return (
     <div className="flex h-screen flex-col bg-slate-950">
@@ -26,7 +31,9 @@ const MainLayout = () => {
 
       <div className="flex flex-1 overflow-hidden">
         <Sidebar
-          conversations={conversations}
+  conversations={filteredConversations}
+  search={search}
+  onSearch={setSearch}
           activeConversationId={activeConversationId}
           onNewChat={createConversation}
           onSelectConversation={setActiveConversationId}

@@ -12,6 +12,10 @@ import type { Conversation } from "@/types/conversation";
 interface SidebarProps {
   conversations: Conversation[];
   activeConversationId: string;
+
+  search: string;
+  onSearch: (value: string) => void;
+
   onNewChat: () => void;
   onSelectConversation: (id: string) => void;
 }
@@ -19,12 +23,23 @@ interface SidebarProps {
 const Sidebar = ({
   conversations,
   activeConversationId,
+  search,
+  onSearch,
   onNewChat,
   onSelectConversation,
 }: SidebarProps) => {
   return (
     <aside className="hidden md:flex h-full w-64 lg:w-72 xl:w-80 flex-col border-r border-slate-800 bg-slate-900">
       {/* Logo */}
+      <div className="mb-4">
+  <input
+    type="text"
+    placeholder="Search conversations..."
+    value={search}
+    onChange={(e) => onSearch(e.target.value)}
+    className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-2 text-sm text-white placeholder:text-slate-500 focus:border-blue-500 focus:outline-none"
+  />
+</div>
       <div className="border-b border-slate-800 p-5">
         <h1 className="text-2xl font-bold text-white">
           SHAAN
