@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 import ChatWindow from "../chat/ChatWindow";
 import ChatInput from "../chat/ChatInput";
 
-import { useConversations } from "../../hooks/useConversations";
+import { useConversations } from "@/hooks/useConversations";
 
 const MainLayout = () => {
   const {
@@ -20,24 +20,14 @@ const MainLayout = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const [search, setSearch] = useState("");
-
-  const filteredConversations = conversations.filter((conversation) =>
-    conversation.title
-      .toLowerCase()
-      .includes(search.toLowerCase())
-  );
-
   return (
     <div className="flex h-screen flex-col bg-slate-950">
       <Header />
 
       <div className="flex flex-1 overflow-hidden">
         <Sidebar
-          conversations={filteredConversations}
+          conversations={conversations}
           activeConversationId={activeConversationId}
-          search={search}
-          onSearch={setSearch}
           onNewChat={createConversation}
           onSelectConversation={setActiveConversationId}
         />
