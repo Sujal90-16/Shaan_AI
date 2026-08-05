@@ -1,17 +1,20 @@
-import {
-  MessageSquare,
-  Brain,
-  Zap,
-  Folder,
-  Settings,
-  Plus,
-} from "lucide-react";
+import { Plus } from "lucide-react";
 
-import type { Conversation } from "../../types/conversation";
+import Logo from "@/components/common/Logo";
+import Button from "@/components/ui/Button";
+
+import ConversationSection from "@/features/conversation/ConversationSection";
+import SidebarNavigation from "./SidebarNavigation";
+
+import type { Conversation } from "@/types/conversation";
 
 interface SidebarProps {
   conversations: Conversation[];
   activeConversationId: string;
+
+  search: string;
+  onSearch: (value: string) => void;
+
   onNewChat: () => void;
   onSelectConversation: (id: string) => void;
 }
@@ -19,84 +22,47 @@ interface SidebarProps {
 const Sidebar = ({
   conversations,
   activeConversationId,
+  search,
+  onSearch,
   onNewChat,
   onSelectConversation,
 }: SidebarProps) => {
   return (
-    <aside className="hidden md:flex h-full w-64 lg:w-72 xl:w-80 flex-col border-r border-slate-800 bg-slate-900">
-      {/* Top */}
+    <aside className="hidden h-full w-64 flex-col border-r border-slate-800 bg-slate-900 md:flex lg:w-72 xl:w-80">
+      {/* Header */}
       <div className="border-b border-slate-800 p-5">
-        <h1 className="text-2xl font-bold text-white">
-          SHAAN
-        </h1>
+        <Logo />
 
-        <p className="mt-1 text-sm text-slate-400">
-          Your Personal AI Assistant
-        </p>
-
-        <button
+        <Button
           onClick={onNewChat}
-          className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-700"
+          className="mt-5 w-full"
         >
           <Plus size={18} />
-          New Chat
-        </button>
+
+          <span className="ml-2">
+            New Chat
+          </span>
+        </Button>
       </div>
 
-      {/* Chat History */}
-      <div className="min-h-0 flex-1 overflow-y-auto p-4">
-        <p className="mb-3 px-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
-          Recent Chats
-        </p>
-
-        <div className="space-y-2">
-          {conversations.map((chat) => (
-            <button
-              key={chat.id}
-              onClick={() => onSelectConversation(chat.id)}
-              className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition ${
-                activeConversationId === chat.id
-                  ? "bg-blue-600 text-white"
-                  : "text-slate-300 hover:bg-slate-800"
-              }`}
-            >
-              <MessageSquare size={18} />
-
-              <span className="truncate">
-                {chat.title}
-              </span>
-            </button>
-          ))}
-        </div>
+      {/* Conversations */}
+      <div className="flex-1 overflow-y-auto p-4">
+        <ConversationSection
+          conversations={conversations}
+          activeConversationId={activeConversationId}
+          search={search}
+          onSearch={onSearch}
+          onSelect={onSelectConversation}
+        />
       </div>
 
-      {/* Bottom */}
+      {/* Navigation */}
       <div className="border-t border-slate-800 p-4">
-        <div className="space-y-2">
-          <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-slate-300 transition hover:bg-slate-800">
-            <Brain size={18} />
-            Memory
-          </button>
-
-          <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-slate-300 transition hover:bg-slate-800">
-            <Zap size={18} />
-            Automations
-          </button>
-
-          <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-slate-300 transition hover:bg-slate-800">
-            <Folder size={18} />
-            Files
-          </button>
-
-          <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-slate-300 transition hover:bg-slate-800">
-            <Settings size={18} />
-            Settings
-          </button>
-        </div>
+        <SidebarNavigation />
 
         <div className="mt-6 border-t border-slate-800 pt-4">
           <p className="text-xs text-slate-500">
-            SHAAN AI v0.2
+            SHAAN AI v0.2.0
           </p>
         </div>
       </div>
